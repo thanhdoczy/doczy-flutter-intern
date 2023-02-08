@@ -139,8 +139,9 @@ class PostBody extends StatelessWidget {
       padding: const EdgeInsets.only(top: 9, left: 9, right: 9),
       child: LazyLoadScrollView(
         onEndOfPage: () {
-          print(_postBloc is PostError);
-          (_postBloc is! PostError) ? _postBloc.add(PostFetch()) : null;
+          (BlocProvider.of<PostBloc>(context).state is PostError)
+              ? null
+              : _postBloc.add(PostFetch());
         },
         child: SingleChildScrollView(
           controller: _controller,
