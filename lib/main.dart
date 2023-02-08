@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rewind/bloc/favorite_bloc.dart';
+import 'package:flutter_rewind/bloc/post_bloc.dart';
 import 'package:flutter_rewind/colors.dart';
 import 'package:flutter_rewind/data/models/post.dart';
+import 'package:flutter_rewind/data/repositories/post_repository.dart';
 import 'package:flutter_rewind/data/services/favorite_podcast_service.dart';
+import 'package:flutter_rewind/data/services/post_service.dart';
 import 'package:flutter_rewind/screens/favorite/favorite_screen2.dart';
 import 'package:flutter_rewind/screens/home/home_screen.dart';
+import 'package:flutter_rewind/screens/post/post_screen.dart';
 import 'package:flutter_rewind/theme.dart';
 import 'package:flutter_rewind/widgets/my_text.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,14 +46,14 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: theme(),
-          // home: RepositoryProvider(
-          //   create: (context) => PostRepository(PostService()),
-          //   child: BlocProvider(
-          //     create: (context) => PostBloc(RepositoryProvider.of<PostRepository>(context)),
-          //     child: const PostScreen(),
-          //   ),
-          // ),
-          home: const MainScreen(),
+          home: RepositoryProvider(
+            create: (context) => PostRepository(PostService()),
+            child: BlocProvider(
+              create: (context) => PostBloc(RepositoryProvider.of<PostRepository>(context)),
+              child: const PostScreen(),
+            ),
+          ),
+          // home: const MainScreen(),
         ),
       ),
     );
@@ -80,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                   items: const [
                     BottomNavigationBarItem(
                       icon: Icon(
-                        Icons.apps,
+                        Icons.home,
                       ),
                     ),
                     BottomNavigationBarItem(

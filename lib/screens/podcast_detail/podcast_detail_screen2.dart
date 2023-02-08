@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rewind/bloc/favorite_bloc.dart';
 import 'package:flutter_rewind/data/models/podcast.dart';
-import 'package:flutter_rewind/main.dart';
 import 'package:flutter_rewind/widgets/my_text.dart';
 import 'package:flutter_rewind/widgets/podcast_slider.dart';
 
@@ -28,7 +27,7 @@ class PodCastDetailScreen2 extends StatefulWidget {
 }
 
 class _PodCastDetailScreenState extends State<PodCastDetailScreen2> {
-  final int valueHolder = 20;
+  int valueHolder = 20;
   late List<PodCast> favorites;
   bool isFavorite = false;
   void updatePodCast(PodCast newPostCast) {
@@ -48,17 +47,41 @@ class _PodCastDetailScreenState extends State<PodCastDetailScreen2> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
+          splashRadius: 16,
+          padding: EdgeInsets.zero,
+          constraints: BoxConstraints(),
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-          ),
+          icon: const Icon(Icons.arrow_back_ios_new, size: 10),
         ),
         elevation: 0,
         actions: [
-          Icon(Icons.settings_outlined),
-          Icon(Icons.more_vert),
+          InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.settings_outlined,
+                size: 20,
+              ),
+            ),
+            customBorder: CircleBorder(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 23),
+            child: InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(
+                  Icons.more_vert,
+                  size: 24,
+                ),
+              ),
+              customBorder: CircleBorder(),
+            ),
+          ),
         ],
       ),
       body: Container(
@@ -73,52 +96,53 @@ class _PodCastDetailScreenState extends State<PodCastDetailScreen2> {
                   isFavorite = favorites.contains(widget.podcast);
                   print('updatepodcast: ${favorites.length}');
                   return Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal:
-                          (MediaQuery.of(context).size.width - 248) / 2 - 16),
-                  width: 248,
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                          widget.podcast.image,
-                          height: 248,
-                          width: 248,
+                    margin: EdgeInsets.symmetric(
+                        horizontal:
+                            (MediaQuery.of(context).size.width - 248) / 2 - 16),
+                    width: 248,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            widget.podcast.image,
+                            height: 248,
+                            width: 248,
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        right: 8,
-                        top: 10,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (favorites.contains(widget.podcast)) {
-                              BlocProvider.of<FavoriteBloc>(context).add(RemoveItemFavoriteEvent(widget.podcast));
-                              setState(() {
-                                isFavorite = false;
-                              });
-                            } else {
-                              BlocProvider.of<FavoriteBloc>(context).add(AddItemFavoriteEvent(widget.podcast));
-                              setState(() {
-                                isFavorite = true;
-                              });
-                            }
-
-                          },
-                          child: (!isFavorite)
-                              ? Icon(
-                                  Icons.favorite_outline,
-                                  color: Colors.white,
-                                )
-                              : Icon(
-                                  Icons.favorite,
-                                  color: Colors.white,
-                                ),
+                        Positioned(
+                          right: 8,
+                          top: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (favorites.contains(widget.podcast)) {
+                                BlocProvider.of<FavoriteBloc>(context).add(
+                                    RemoveItemFavoriteEvent(widget.podcast));
+                                setState(() {
+                                  isFavorite = false;
+                                });
+                              } else {
+                                BlocProvider.of<FavoriteBloc>(context)
+                                    .add(AddItemFavoriteEvent(widget.podcast));
+                                setState(() {
+                                  isFavorite = true;
+                                });
+                              }
+                            },
+                            child: (!isFavorite)
+                                ? Icon(
+                                    Icons.favorite_outline,
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                  ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
+                      ],
+                    ),
+                  );
                 }
                 return Container();
               },
@@ -141,30 +165,65 @@ class _PodCastDetailScreenState extends State<PodCastDetailScreen2> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
-                  Icons.shuffle,
-                  color: Colors.white,
-                  size: 20,
+                InkWell(
+                  onTap: () {},
+                  customBorder: CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.shuffle,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
                 ),
-                Icon(
-                  Icons.skip_previous,
-                  color: Colors.white,
-                  size: 22,
+                InkWell(
+                  onTap: () {},
+                  customBorder: CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.skip_previous,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
                 ),
-                Icon(
-                  Icons.play_circle,
-                  color: Colors.white,
-                  size: 48,
+                InkWell(
+                  onTap: () {},
+                  customBorder: CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.play_circle,
+                      color: Colors.white,
+                      size: 48,
+                    ),
+                  ),
                 ),
-                Icon(
-                  Icons.skip_next,
-                  color: Colors.white,
-                  size: 22,
+                InkWell(
+                  onTap: () {},
+                  customBorder: CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.skip_next,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
                 ),
-                Icon(
-                  Icons.loop,
-                  color: Colors.white,
-                  size: 20,
+                InkWell(
+                  onTap: () {},
+                  customBorder: CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.loop,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -186,9 +245,9 @@ class _PodCastDetailScreenState extends State<PodCastDetailScreen2> {
                       thumbColor: Colors.white,
                       label: '${valueHolder.round()}',
                       onChanged: (double newValue) {
-                        // setState(() {
-                        //   valueHolder = newValue.round();
-                        // });
+                        setState(() {
+                          valueHolder = newValue.round();
+                        });
                       },
                       // semanticFormatterCallback: (double newValue) {
                       //   return '${newValue.round()}';

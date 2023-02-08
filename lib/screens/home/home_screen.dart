@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_rewind/colors.dart';
 import 'package:flutter_rewind/data/models/category.dart';
 import 'package:flutter_rewind/data/models/podcast.dart';
 import 'package:flutter_rewind/screens/favorite/favorite_screen.dart';
 import 'package:flutter_rewind/widgets/category_slider.dart';
-import 'package:flutter_rewind/widgets/my_text.dart';
 import 'package:flutter_rewind/widgets/podcast_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -47,8 +45,24 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
     if (_selectedIndex == 3) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => FavoriteScreen()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => FavoriteScreen()));
     }
+  }
+
+  late TextEditingController _searchController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _searchController.dispose();
   }
 
   @override
@@ -88,10 +102,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       width: 8,
                     ),
-                    MyText(
-                      text: 'Search',
-                      color: Color.fromRGBO(143, 155, 179, 1),
-                    ),
+                    Expanded(
+                      child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        controller: _searchController,
+                        cursorColor: Colors.white,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Search',
+                          hintStyle: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
